@@ -1,30 +1,8 @@
-
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/31465/34380645-bd67f474-eb0b-11e7-8d03-0151c1730654.png" height="29" />
-</p>
-<p align="center">
-  <i>An open, extensible, wiki for your team built using React and Node.js.<br/>Try out Outline using our hosted version at <a href="https://www.getoutline.com">www.getoutline.com</a>.</i>
-  <br/>
-  <img width="1640" alt="screenshot" src="https://user-images.githubusercontent.com/380914/110356468-26374600-7fef-11eb-9f6a-f2cc2c8c6590.png">
-</p>
-<p align="center">
-  <a href="https://circleci.com/gh/outline/outline" rel="nofollow"><img src="https://circleci.com/gh/outline/outline.svg?style=shield&amp;circle-token=c0c4c2f39990e277385d5c1ae96169c409eb887a"></a>
-  <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat"></a>
-  <a href="https://github.com/styled-components/styled-components"><img src="https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg"></a>
-  <a href="https://translate.getoutline.com/project/outline"><img src="https://badges.crowdin.net/outline/localized.svg"></a>
-</p>
-
-This is the source code that runs [**Outline**](https://www.getoutline.com) and all the associated services. If you want to use Outline then you don't need to run this code, we offer a hosted version of the app at [getoutline.com](https://www.getoutline.com).
-
-If you'd like to run your own copy of Outline or contribute to development then this is the place for you.
-
 # Installation
 
 Outline requires the following dependencies:
 
-- [Node.js](https://nodejs.org/) >= 12
-- [Yarn](https://yarnpkg.com)
+- [Node.js and NPM](https://nodejs.org/) >= 12
 - [Postgres](https://www.postgresql.org/download/) >=9.5
 - [Redis](https://redis.io/) >= 4
 - AWS S3 bucket or compatible API for file storage
@@ -44,10 +22,10 @@ For a manual self-hosted production installation these are the recommended steps
 1. Using the [.env.sample](.env.sample) as a reference, set the required variables in your production environment. You can export the environment variables directly, or create a `.env` file and pass it to the docker image like so:
 
    `docker run --env-file=.env outlinewiki/outline`
-1. Setup the database with `yarn db:migrate`. Production assumes an SSL connection to the database by default, if
-Postgres is on the same machine and is not SSL you can migrate with `yarn db:migrate --env=production-ssl-disabled`, for example:
+1. Setup the database with `npm run db:migrate`. Production assumes an SSL connection to the database by default, if
+Postgres is on the same machine and is not SSL you can migrate with `npm run db:migrate --env=production-ssl-disabled`, for example:
 
-   `docker run --rm outlinewiki/outline yarn db:migrate`
+   `docker run --rm outlinewiki/outline npm run db:migrate`
 1. Start the container:
 
    `docker run outlinewiki/outline`
@@ -68,7 +46,7 @@ Alternatively a community member maintains a script to deploy Outline on Google 
 If you're running Outline with Docker you'll need to run migrations within the docker container after updating the image. The command will be something like:
 
 ```shell
-docker run --rm outlinewiki/outline:latest yarn db:migrate
+docker run --rm outlinewiki/outline:latest npm run db:migrate
 ```
 
 #### Git
@@ -76,7 +54,7 @@ docker run --rm outlinewiki/outline:latest yarn db:migrate
 If you're running Outline by cloning this repository, run the following command to upgrade:
 
 ```shell
-yarn run upgrade
+npm run upgrade
 ```
 
 
@@ -86,20 +64,19 @@ For contributing features and fixes you can quickly get an environment running u
 
 1. Install these dependencies if you don't already have them
     1. [Docker for Desktop](https://www.docker.com)
-    1. [Node.js](https://nodejs.org/) (v12 LTS preferred)
-    1. [Yarn](https://yarnpkg.com)
-1. Clone this repo
-1. Register a Slack app at https://api.slack.com/apps
-1. Copy the file `.env.sample` to `.env`
-1. Fill out the following fields:
+    1. [Node.js and NPM](https://nodejs.org/) (v12 LTS preferred)
+2. Clone this repo
+3. Register a Slack app at https://api.slack.com/apps
+4. Copy the file `.env.sample` to `.env`
+5. Fill out the following fields:
     1. `SECRET_KEY` (follow instructions in the comments at the top of `.env`)
-    1. `SLACK_KEY` (this is called "Client ID" in Slack admin)
-    1. `SLACK_SECRET` (this is called "Client Secret" in Slack admin)
-1. Configure your Slack app's Oauth & Permissions settings 
+    2. `SLACK_KEY` (this is called "Client ID" in Slack admin)
+    3. `SLACK_SECRET` (this is called "Client Secret" in Slack admin)
+6. Configure your Slack app's Oauth & Permissions settings
     1. Slack recently prevented the use of `http` protocol for localhost. For local development, you can use a tool like [ngrok](https://ngrok.com) or a package like `mkcert`. ([How to use HTTPS for local development](https://web.dev/how-to-use-local-https/))
-    1. Add `https://my_ngrok_address/auth/slack.callback` as an Oauth redirect URL
-    1. Ensure that the bot token scope contains at least `users:read`
-1. Run `make up`. This will download dependencies, build and launch a development version of Outline
+    2. Add `https://my_ngrok_address/auth/slack.callback` as an Oauth redirect URL
+    3. Ensure that the bot token scope contains at least `users:read`
+7. Run `make up`. This will download dependencies, build and launch a development version of Outline
 
 
 # Contributing
@@ -150,10 +127,10 @@ frontend and backend tests directly.
 
 ```shell
 # To run backend tests
-yarn test:server
+npm run test:server
 
 # To run frontend tests
-yarn test:app
+npm run test:app
 ```
 
 ## Migrations
@@ -161,14 +138,14 @@ yarn test:app
 Sequelize is used to create and run migrations, for example:
 
 ```
-yarn sequelize migration:generate --name my-migration
-yarn sequelize db:migrate
+npm run sequelize migration:generate --name my-migration
+npm run sequelize db:migrate
 ```
 
 Or to run migrations on test database:
 
 ```
-yarn sequelize db:migrate --env test
+npm run sequelize db:migrate --env test
 ```
 
 ## License
